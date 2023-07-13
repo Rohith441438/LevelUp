@@ -19,6 +19,35 @@ namespace EmployeeService.Controllers
             }
         }
 
+        //If method name is Get or starts with Get automatically it will be considered as a Get verb, if we want to have other than Get or Starts with Get but want that method to be Get method then we need to Add one attribute that is HttpGet
+        //See the below example
+        //Here as we already have a get method, asp.net is not going to consider these two methods as it considers them as one
+        //two resolve this issue we should follow custom action names
+        //
+        [HttpGet]
+        public HttpResponseMessage LoadAllMaleEmployees()
+        {
+            try
+            {
+                using (EmployeeDBContext dbContext = new EmployeeDBContext())
+                {
+                    var maleEmployees = dbContext.Employees.Where(x => x.Gender == "Male").ToList();
+                    if (maleEmployees.Any())
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, maleEmployees);
+                    }
+                    else
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No Male employees found");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
+            }            
+        }
+
         public HttpResponseMessage GetById(int id)
         {
             using(EmployeeDBContext dbContext = new EmployeeDBContext())
@@ -152,5 +181,10 @@ namespace EmployeeService.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
             }
         }
+
+        //parameter binding
+        //All the default data types are considered as the parameters from URI by default
+        //If we pass any complex data types like custom data types are considered as the parameters form Body by default
+        //but still if we want to force any parameter to be accessed from URI then need to apply [FromUri] Attribute to it and from Body then [FromBody] need to be applied
     }
 }
