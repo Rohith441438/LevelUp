@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>GetEmployeesPage</title>
+    <script src="Scripts/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var ulEmployees = $('#ul-employees');
+            $('#button-get-all-employees').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: 'api/Employee/Get',
+                    dataType: 'json',
+                    success: function (data) {
+                        ulEmployees.empty();
+                        $.each(data, function (index, value) {
+                            ulEmployees.append('<li>'+ "First Name -" + value.FirstName + " Last Name - " + value.LastName + " Gender - " + value.Gender);
+                        });
+                    }
+                })
+            });
+            $('#button-clear').click(function () {
+                ulEmployees.empty();
+            });
+        });
+    </script>
+</head>
+<body>
+    <button id="button-get-all-employees">Get All Employees</button>
+    <button id="button-clear">Clear</button>
+    <ul id="ul-employees"/>
+</body>
+</html>
