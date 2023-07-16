@@ -21,6 +21,15 @@ namespace EmployeeService
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            //Here in the below, How Routing and Action Selection can be done in ASP.net
+            config.Routes.MapHttpRoute(
+                name:"ActionAPI",
+                routeTemplate:"api/Employee/{action}/{id}",
+                defaults: new { id = RouteParameter.Optional },
+                constraints: new { id = @"\d+" }
+            );
+            //In the above example we Added one new Schema, any URL that matches the above schema will be directed to the respective Action method in Employee controller
+
             //CORS - Cross Origin Resource Sharing
             //If we are accessing an API which is from different origin then browsers will not allow as they are not from same origin, in this case we should Enablecors in that API, lets see how we can Enable
 
