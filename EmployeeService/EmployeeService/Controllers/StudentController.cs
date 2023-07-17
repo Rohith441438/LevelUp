@@ -47,5 +47,23 @@ namespace EmployeeService.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, interestSubs);
         }
+
+        //Optional URI parameters in Attribute Routing
+        //Optional URI parameters in Attribute Routing can be done in two ways
+        //First way
+        //Here the default value for id will be 1, which we provided in the Method Parameter
+        [Route("api/Student/GetStudentByIdFirst/{stdId:int?}")]
+        public HttpResponseMessage GetStudentByIdFirstWay(int stdId = 1)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, StudentsList.Where(x => x.Id == stdId).FirstOrDefault());
+        }
+
+        //Second way
+        //here we can directly provide the default value in the Route Attribute itself
+        [Route("api/Student/GetStudentByIdSecond/{stdId:int=1}")]
+        public HttpResponseMessage GetStudentByIdSecondWay(int stdId)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, StudentsList.Where(x => x.Id == stdId).FirstOrDefault());
+        }
     }
 }
