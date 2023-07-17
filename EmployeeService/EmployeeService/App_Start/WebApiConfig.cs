@@ -17,11 +17,12 @@ namespace EmployeeService
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
+                routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
             //Here in the below, How Routing and Action Selection can be done in ASP.net
+            //Convention-based Routing
             config.Routes.MapHttpRoute(
                 name:"ActionAPI",
                 routeTemplate:"api/Employee/{action}/{id}",

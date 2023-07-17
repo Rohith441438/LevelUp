@@ -185,6 +185,6 @@ namespace EmployeeService.Controllers
         //parameter binding
         //All the default data types are considered as the parameters from URI by default
         //If we pass any complex data types like custom data types are considered as the parameters form Body by default
-        //but still if we want to force any parameter to be accessed from URI then need to apply [FromUri] Attribute to it and from Body then [FromBody] need to be applied
+        //but still if we want to force any parameter to be accessed from URI then need to apply [FromUri] Attribute to it and from Body then [FromBody] need to be applied        
     }
 }
