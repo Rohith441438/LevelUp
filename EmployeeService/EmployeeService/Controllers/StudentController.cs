@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace EmployeeService.Controllers
 {
+    [RoutePrefix("api/Student")]
     public class StudentController : ApiController
     {
         //This controller is for the explanation of Attribute routing
@@ -31,7 +32,7 @@ namespace EmployeeService.Controllers
 
         //Here the below Http Method is very similar to the above method, If we didnt follow Convetion based routing, ASP.Net will not recognize the Above and below methods as they are very similar. To get rid of this kind of situations, where a particular Element have sub elements, ex : Students have subjects, Employees have jobs. we will get this kind of Ambiguity, we can achieve this by following convention based routing where we add {action} parameter to routeUriTemplate, but other way and most simple way is to Follow Attribute Routing, as like below
 
-        [Route("api/Student/GetSubjectsForStudentsById/{id}")]
+        [Route("GetSubjectsForStudentsById/{id}")]
         public HttpResponseMessage GetStudentInterests(int id)
         {
             var interestSubs = new List<string>();
@@ -52,7 +53,7 @@ namespace EmployeeService.Controllers
         //Optional URI parameters in Attribute Routing can be done in two ways
         //First way
         //Here the default value for id will be 1, which we provided in the Method Parameter
-        [Route("api/Student/GetStudentByIdFirst/{stdId:int?}")]
+        [Route("~/Student/GetStudentByIdFirst/{stdId:int?}")]
         public HttpResponseMessage GetStudentByIdFirstWay(int stdId = 1)
         {
             return Request.CreateResponse(HttpStatusCode.OK, StudentsList.Where(x => x.Id == stdId).FirstOrDefault());
@@ -60,7 +61,7 @@ namespace EmployeeService.Controllers
 
         //Second way
         //here we can directly provide the default value in the Route Attribute itself
-        [Route("api/Student/GetStudentByIdSecond/{stdId:int=1}")]
+        [Route("GetStudentByIdSecond/{stdId:int=1}")]
         public HttpResponseMessage GetStudentByIdSecondWay(int stdId)
         {
             return Request.CreateResponse(HttpStatusCode.OK, StudentsList.Where(x => x.Id == stdId).FirstOrDefault());
