@@ -1,8 +1,11 @@
-﻿using System;
+﻿using EmployeeService.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Routing;
 
 namespace EmployeeService
 {
@@ -10,10 +13,16 @@ namespace EmployeeService
     {
         public static void Register(HttpConfiguration config)
         {
+            //After creating Custom Route Constraint, we need to add this to config
+            //follow the below steps
+            var constraintResolver = new DefaultInlineConstraintResolver();
+            constraintResolver.ConstraintMap.Add("nonZero", typeof(NonZeroConstraint));
+
+            config.MapHttpAttributeRoutes(constraintResolver);
             // Web API configuration and services
 
             // Web API routes
-            config.MapHttpAttributeRoutes();
+            //config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

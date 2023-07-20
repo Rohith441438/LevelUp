@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Web.Http;
 
 namespace EmployeeService.Controllers
@@ -53,6 +54,7 @@ namespace EmployeeService.Controllers
         //Optional URI parameters in Attribute Routing can be done in two ways
         //First way
         //Here the default value for id will be 1, which we provided in the Method Parameter
+        //here int is a constraint used to limit the parameter to be integer, like this we can apply alpha as well to constraint to strings
         [Route("~/Student/GetStudentByIdFirst/{stdId:int?}")]
         public HttpResponseMessage GetStudentByIdFirstWay(int stdId = 1)
         {
@@ -66,5 +68,27 @@ namespace EmployeeService.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, StudentsList.Where(x => x.Id == stdId).FirstOrDefault());
         }
+
+        //Attribute Routing parameters constraints in Route
+        [Route("GetStudentByName/{name:alpha=Rohith}")]
+        public HttpResponseMessage GetStudentByName(string name)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, StudentsList.FirstOrDefault(x => x.Name.ToLower() == name.ToLower()));
+        }
+
+        //Attribute Routing parameters constraints in Route Example 2
+        [Route("GetStudentByIdNew/{strId:int:min(1):max(4)}")]
+        //[Route("GetStudentByIdNew/{strId:int:range(1,4)}")]
+        public HttpResponseMessage GetStudentByIdNew(int strId)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, StudentsList.FirstOrDefault(x => x.Id == strId));
+        }
+
+        //Attribute Routing parameters constraints in Route by using custom constraint
+        [Route("GetStudentByNameUsingCustomConstraint/{strId:nonZero}")]
+        public HttpResponseMessage GetStudentByNameUsingCustomConstraint(int strId)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, StudentsList.FirstOrDefault(x => x.Id == strId));
+        }       
     }
 }
