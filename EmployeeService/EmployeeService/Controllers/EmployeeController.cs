@@ -185,6 +185,46 @@ namespace EmployeeService.Controllers
         //parameter binding
         //All the default data types are considered as the parameters from URI by default
         //If we pass any complex data types like custom data types are considered as the parameters form Body by default
-        //but still if we want to force any parameter to be accessed from URI then need to apply [FromUri] Attribute to it and from Body then [FromBody] need to be applied        
+        //but still if we want to force any parameter to be accessed from URI then need to apply [FromUri] Attribute to it and from Body then [FromBody] need to be applied
+        //
+
+
+        //RouteName
+        //We are apply Route name for each Route, it will help us in generating links which we can add in the response url
+        //Lets see the example
+        [HttpGet]
+        [Route("{stdId:nonZero}", Name = "GetEmployeeByIdRouteName")]
+        public HttpResponseMessage GetEmployeeByIdRouteName(int strId)
+        {
+            using (EmployeeDBContext dBContext = new EmployeeDBContext())
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, dBContext.Employees.FirstOrDefault(x => x.ID == strId));
+            }            
+        }
+
+        [HttpPost]
+        [Route("api/Employee/PostEmployee")]
+        public HttpResponseMessage PostEmployee(Employee employee)
+        {
+            using(EmployeeDBContext dBContext = new EmployeeDBContext())
+            {
+                var entity = dBContext.Employees.FirstOrDefault(x => x.ID == employee.ID);
+                if(entity == null)
+                {
+                    dBContext.Employees.Add(employee);
+                    dBContext.SaveChanges();
+
+                    var url = Url.Link("GetEmployeeByIdRouteName", new { stdId  = employee.ID});
+                    var response = Request.CreateResponse(HttpStatusCode.Created);
+                    response.Headers.Location = new Uri(url);
+
+                    return response;
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, "Employee already exists try with another Id");
+                }
+            }
+        }
     }
 }

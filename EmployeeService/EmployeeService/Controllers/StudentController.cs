@@ -89,6 +89,6 @@ namespace EmployeeService.Controllers
         public HttpResponseMessage GetStudentByNameUsingCustomConstraint(int strId)
         {
             return Request.CreateResponse(HttpStatusCode.OK, StudentsList.FirstOrDefault(x => x.Id == strId));
-        }       
+        }
     }
 }
