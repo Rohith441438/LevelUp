@@ -7,15 +7,21 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var ulEmployees = $('#ul-employees');
+            
             $('#button-get-all-employees').click(function () {
                 $.ajax({
                     type: 'GET',
-                    url: 'api/Employee/Get',
+                    url: 'https://localhost:44357/api/Employee/GetEmployees',
                     dataType: 'json',
+                    //specify the authentication header
+                    //btoa method encodes a string to Base64
+                    headers: {
+                        'Authorization': 'Basic ' + btoa($('#txt-username').val() + ':' + $('#txt-password').val())
+                    },
                     success: function (data) {
                         ulEmployees.empty();
                         $.each(data, function (index, value) {
-                            ulEmployees.append('<li>'+ "First Name -" + value.FirstName + " Last Name - " + value.LastName + " Gender - " + value.Gender);
+                            ulEmployees.append('<li>'+ "Name -" + value.Name + " Gender - " + value.Gender + " Dept - " + value.Dept+" Salary - "+value.Salary);
                         });
                     }
                 })
@@ -27,8 +33,11 @@
     </script>
 </head>
 <body>
+    Username : <input type="text" id="txt-username" />
+    Password : <input type="text" id="txt-password" />
+    <br /><br />
     <button id="button-get-all-employees">Get All Employees</button>
     <button id="button-clear">Clear</button>
-    <ul id="ul-employees"/>
+    <ul id="ul-employees" />
 </body>
 </html>

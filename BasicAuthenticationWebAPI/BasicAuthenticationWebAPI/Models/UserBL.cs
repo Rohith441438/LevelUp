@@ -16,14 +16,26 @@ namespace BasicAuthenticationWebAPI.Models
             users.Add(new User() 
             { 
                 ID = 101,
-                UserName = "MaleUser",
+                UserName = "AdminUser",
                 Password = "AdGHkl",
+                Roles = "Admin",
+                Email = "AdminUser@gmail.com"
             });
             users.Add(new User()
             {
                 ID = 121,
-                UserName = "FemaleUser",
-                Password = "OFwlJdlsd",
+                UserName = "BothUser",
+                Password = "OksKfnsD",
+                Roles = "Admin, SuperAdmin",
+                Email = "BothUser@gmail.com"
+            });
+            users.Add(new User()
+            {
+                ID = 131,
+                UserName = "SuperAdminUser",
+                Password = "JHsofgnso",
+                Roles = "SuperAdmin",
+                Email = "SuperAdminUser@gmail.com"
             });
 
             return users;

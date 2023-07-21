@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
@@ -48,9 +49,13 @@ namespace BasicAuthenticationWebAPI.Models
 
                     if (UserValidate.Login(username, password))
                     {
+                        var userDetails = UserValidate.GetUserDetails(username, password);
                         var identity = new GenericIdentity(username);
+                        identity.AddClaim(new Claim("Email", userDetails.Email));
+                        identity.AddClaim(new Claim(ClaimTypes.Name, userDetails.UserName));
+                        identity.AddClaim(new Claim("ID", userDetails.ID.ToString()));                        
 
-                        IPrincipal principal = new GenericPrincipal(identity, null);
+                        IPrincipal principal = new GenericPrincipal(identity, userDetails.Roles.Split(','));
                         Thread.CurrentPrincipal = principal;
 
                         if (HttpContext.Current != null)
