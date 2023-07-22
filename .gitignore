@@ -18,3 +18,6 @@
 /BasicAuthenticationWebAPI/BasicAuthenticationWebAPI/bin
 /BasicAuthenticationWebAPI/BasicAuthenticationWebAPI/obj/Debug
 /BasicAuthenticationWebAPI/packages
+/BasicConsoleApp/.vs
+/BasicConsoleApp/BasicConsoleApp/bin/Debug/net6.0
+/BasicConsoleApp/BasicConsoleApp/obj
