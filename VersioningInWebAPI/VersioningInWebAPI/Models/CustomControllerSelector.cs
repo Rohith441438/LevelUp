@@ -34,11 +34,12 @@ namespace VersioningInWebAPI.Models
 
             //var versionQueryString = HttpUtility.ParseQueryString(request.RequestUri.Query);
 
-            var customerHeader = "X-EmployeeService-Header";            
-            if (request.Headers.Contains(customerHeader))
+            //Get the version number from the Accept Header
+            var acceptHeader = request.Headers.Accept.Where(x => x.Parameters.Count(y => y.Name.ToLower() == "version") > 0);
+            if (acceptHeader.Any())
             {
                 //retreiving the version number from headers
-                versionNumber = request.Headers.GetValues(customerHeader).FirstOrDefault();
+                versionNumber = acceptHeader.First().Parameters.First(x => x.Name.ToLower() == "version").Value;
             }
 
             if(versionNumber == "1")
