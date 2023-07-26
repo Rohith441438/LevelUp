@@ -90,6 +90,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomControllerSelector.cs" />
     <Compile Include="Models\EmployeeV2.cs" />
     <Compile Include="Models\EmployeeV1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

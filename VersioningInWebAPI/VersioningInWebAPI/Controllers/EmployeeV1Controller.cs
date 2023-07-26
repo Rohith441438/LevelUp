@@ -18,9 +18,8 @@ namespace VersioningInWebAPI.Controllers
             new EmployeeV1{ EmployeeId = 104, EmployeeName = "Pravihith"}            
         };
 
-        [HttpGet]
-        [Route("api/v1/Employee/AllEmployees")]
-        public HttpResponseMessage GetEmployees()
+        
+        public HttpResponseMessage Get()
         {
             return Request.CreateResponse(HttpStatusCode.OK, employees.ToList());
         }
