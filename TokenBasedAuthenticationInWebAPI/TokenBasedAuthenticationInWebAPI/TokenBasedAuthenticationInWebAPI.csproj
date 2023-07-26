@@ -139,6 +139,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientMaster.cs">
+      <DependentUpon>SecurityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MyAuthorizationServerProvider.cs" />
     <Compile Include="Models\SecurityModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -158,6 +161,7 @@
     <Compile Include="Models\UserMaster.cs">
       <DependentUpon>SecurityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientMasterRepository.cs" />
     <Compile Include="Models\UserMasteryRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

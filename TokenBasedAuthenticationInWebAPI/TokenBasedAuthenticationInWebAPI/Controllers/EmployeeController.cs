@@ -27,12 +27,17 @@ namespace TokenBasedAuthenticationInWebAPI.Controllers
         //Next step is to add OwinStarup file in App-Start
         //here we will configure the OAuth Authorization Server, please have a look
 
+        //Client-validation can be done in ValidateClientAuthentication Method in MyAuthenticatinServerProvider class, see the method for further info
+
         [Authorize(Roles = "SuperAdmin, Admin, User")]
         public HttpResponseMessage Get()
         {
             var identity = (ClaimsIdentity)User.Identity;
-
-            return Request.CreateResponse(HttpStatusCode.OK, identity.Name);
+            //get the client details from teh clain
+            var clientId = identity.Claims.FirstOrDefault(x => x.Type == "ClientID").Value;
+            var clientSecret = identity.Claims.FirstOrDefault(x => x.Type == "ClientSecret").Value;
+            var clientName = identity.Claims.FirstOrDefault(x => x.Type == "ClientName").Value;
+            return Request.CreateResponse(HttpStatusCode.OK, identity.Name+" "+clientName);
         }
     }
 }

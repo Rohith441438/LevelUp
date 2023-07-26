@@ -26,5 +26,6 @@ namespace TokenBasedAuthenticationInWebAPI.Models
         }
     
         public virtual DbSet<UserMaster> UserMasters { get; set; }
+        public virtual DbSet<ClientMaster> ClientMaster { get; set; }
     }
 }
